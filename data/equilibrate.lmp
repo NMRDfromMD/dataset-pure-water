@@ -27,7 +27,7 @@ fix myber all temp/berendsen 1 1 10
 
 # output
 thermo 1000
-dump mydump all atom 1000 equilibrate.lammpstrj
+# dump mydump all atom 1000 equilibrate.lammpstrj
 
 # run
 run 10000

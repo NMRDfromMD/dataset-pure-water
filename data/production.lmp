@@ -12,7 +12,7 @@ angle_style harmonic
 pair_style lj/cut/tip4p/long 1 2 1 1 0.1546 14.0
 kspace_style pppm/tip4p 1.0e-5
 
-read_data initial.data
+read_data equilibrate.data
 include parameters-h2o.inc
 
 # define groups
@@ -20,36 +20,17 @@ group H2O type 1 2
 group HYD type 2
 
 # dynamics
-timestep 0.1
+timestep 1
 fix myshk H2O shake 1.0e-5 200 0 b 1 a 1
-fix mynve all nve/limit 0.1
-fix myber all temp/berendsen 1 1 10
+fix mynvt all nvt temp 300 300 100
 
-# output
-thermo 1000
-dump mydump all atom 1000 equilibrate.lammpstrj
+# output - print positions every 2 picosecond
+dump mydmp all xtc 2000 production.xtc
+thermo 2000
 
-# run
-run 10000
-unfix mynve
-unfix myber
-
-# dynamics
-timestep 0.5
-fix mynvt all nvt temp 300 300 50
-
-run 10000
-unfix mynvt
-
-# dynamics
-timestep 1.0
-fix mynpt all npt temp 300 300 100 iso 100 100 1000
-
-# output
-thermo 10000
-
-# run
-run 100000
-
-write_data equilibrate.data
+# run 
+run 10000000 # 10 ns
+ 
+write_data production.data
+write_dump all atom production.lammpstrj
 
