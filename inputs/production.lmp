@@ -1,0 +1,36 @@
+# LAMMPS Input Script
+# LAMMPS version: 30Mar2026
+# Author: Simon Gravelle
+# License: GNU General Public License v3.0
+# Project: NMRDfromMD – https://nmrdfrommd.github.io
+# Description: Parameter file for simulating water
+
+units real
+atom_style full
+bond_style harmonic
+angle_style harmonic
+pair_style lj/cut/tip4p/long 1 2 1 1 0.1546 14.0
+kspace_style pppm/tip4p 1.0e-5
+
+read_data equilibrate.data
+include parameters-h2o.inc
+
+# define groups
+group H2O type 1 2
+group HYD type 2
+
+# dynamics
+timestep 1
+fix myshk H2O shake 1.0e-5 200 0 b 1 a 2
+fix mynvt all nvt temp 300 300 100
+
+# output - print positions every 2 picosecond
+dump mydmp all xtc 2000 production.xtc
+thermo 2000
+
+# run 
+run 10000000 # 10 ns
+ 
+write_data production.data
+write_dump all atom production.lammpstrj
+
