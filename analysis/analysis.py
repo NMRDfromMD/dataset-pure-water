@@ -25,17 +25,36 @@ print(f"The total simulation time is {total_time//1000} ns")
 
 H_H2O = u.select_atoms("type 2")
 
-for n in [5, 20, 80, 320, 1280]:
+for n, repet in zip([5, 25, 50], [10, 2, 1]): # , 320, 1280]:
 
-    ti = time.time()
+    for iteration in range(repet):
 
-    nmr_intra_H2O = NMRD(
-        u=u,
-        atom_group=H_H2O,
-        type_analysis="full",
-        number_i=n)
-    nmr_intra_H2O.run_analysis()
-    save_result(nmr_intra_H2O, n, f"nmr_full_H2O")
+        ti = time.time()
 
-    tf = time.time()
-    print("time", np.round(tf-ti,1))
+        nmr_intra_H2O = NMRD(
+            u=u,
+            atom_group=H_H2O,
+            type_analysis="intra_molecular",
+            number_i=n)
+        results_nmr_intra_H2O = nmr_intra_H2O.run_analysis()
+        save_result(results_nmr_intra_H2O, n, iteration, f"nmr_intra")
+
+        nmr_inter_H2O = NMRD(
+            u=u,
+            atom_group=H_H2O,
+            type_analysis="inter_molecular",
+            number_i=n)
+        results_nmr_inter_H2O = nmr_inter_H2O.run_analysis()
+        save_result(results_nmr_inter_H2O, n, iteration, f"nmr_inter")
+
+        nmr_intra_H2O = NMRD(
+            u=u,
+            atom_group=H_H2O,
+            type_analysis="full",
+            isotropic=False,
+            number_i=n)
+        results_nmr_intra_H2O = nmr_intra_H2O.run_analysis()
+        save_result(results_nmr_intra_H2O, n, iteration, f"nmr_full")
+
+        tf = time.time()
+        print("time", np.round(tf-ti,1))
