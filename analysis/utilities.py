@@ -20,14 +20,16 @@ def save_result(data, n, iteration, name):
     C = data["gij"]
     R1 = data["R1"]
     R2 = data["R2"]
-    
+    J = data["J"]
+
     # Save updated data
     result = {
         "t": t,
         "f": f,
         "C": C,
         "R1": R1,
-        "R2": R2
+        "R2": R2,
+        "J": J,
     }
 
     np.save(saving_file, result)

@@ -34,8 +34,9 @@ def place_molecules(NH2O):
     while (cptH2O<NH2O):
 
         ## choose initial box dimensions
-        Lx, Ly, Lz = 3.5+0.5*attempt, 3.5+0.5*attempt, 3.5+0.5*attempt # nm
-        
+        Lx, Ly, Lz = 4.0+0.5*attempt, 4.0+0.5*attempt, 4.0+0.5*attempt # nm
+        print(f"Attempting box creation with L = {Lx}")
+
         box = np.array([Lx, Ly, Lz])
 
         ## initialise matrix
