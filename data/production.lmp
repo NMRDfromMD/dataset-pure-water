@@ -21,7 +21,7 @@ group HYD type 2
 
 # dynamics
 timestep 2
-fix myshk H2O shake 1.0e-5 200 0 b 1 a 2
+fix myshk H2O shake 1.0e-5 200 0 b 1 a 1
 fix mynvt all nvt temp 300 300 100
 
 # output - print positions every 2 picosecond
