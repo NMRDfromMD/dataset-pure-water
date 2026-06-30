@@ -25,7 +25,7 @@ print(f"The total simulation time is {total_time//1000} ns")
 
 H_H2O = u.select_atoms("type 2")
 
-for n, repet in zip([5, 2000], [20, 1]):
+for n, repet in zip([5, 2000], [50, 1]):
 
     for iteration in range(repet):
 
@@ -60,3 +60,4 @@ for n, repet in zip([5, 2000], [20, 1]):
 
         tf = time.time()
         print("time", np.round(tf-ti,1))
+
